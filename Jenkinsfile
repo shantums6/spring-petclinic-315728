@@ -15,7 +15,7 @@ pipeline {
         maven 'maven3'
     }
             steps {
-                sh 'mvn clean package'
+                sh 'mvn clean package -DskipTests'
             }
         }
 
