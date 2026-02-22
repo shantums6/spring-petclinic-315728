@@ -11,6 +11,9 @@ pipeline {
     stages {
 
         stage('Build with Maven') {
+            tools {
+        maven 'maven3'
+    }
             steps {
                 sh 'mvn clean package'
             }
