@@ -35,7 +35,7 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                sh 'sudo docker build -t $IMAGE_NAME:latest .'
+                sh 'docker build -t $IMAGE_NAME:latest .'
             }
         }
 
@@ -43,7 +43,7 @@ pipeline {
             steps {
                 sh '''
                 aws ecr get-login-password --region $AWS_REGION | \
-                sudo docker login --username AWS --password-stdin $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+                docker login --username AWS --password-stdin $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
                 '''
             }
         }
@@ -51,7 +51,7 @@ pipeline {
         stage('Tag Image') {
             steps {
                 sh '''
-                sudo docker tag $IMAGE_NAME:latest \
+                docker tag $IMAGE_NAME:latest \
                 $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$REPO_NAME:latest
                 '''
             }
@@ -60,7 +60,7 @@ pipeline {
         stage('Push to ECR') {
             steps {
                 sh '''
-                sudo docker push \
+                docker push \
                 $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$REPO_NAME:latest
                 '''
             }
