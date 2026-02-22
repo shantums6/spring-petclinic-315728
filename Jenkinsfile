@@ -20,10 +20,18 @@ pipeline {
         }
 
         stage('SonarQube Analysis') {
-            steps {
-                sh 'mvn sonar:sonar'
-            }
+    steps {
+        withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
+            sh '''
+            mvn sonar:sonar \
+              -Dsonar.projectKey=petclinic \
+              -Dsonar.projectName=petclinic \
+              -Dsonar.host.url=http://<Sonar-Private-IP>:9000 \
+              -Dsonar.login=$SONAR_TOKEN
+            '''
         }
+    }
+}
 
         stage('Docker Build') {
             steps {
