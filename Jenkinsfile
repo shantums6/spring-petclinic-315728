@@ -26,7 +26,7 @@ pipeline {
             mvn sonar:sonar \
               -Dsonar.projectKey=petclinic \
               -Dsonar.projectName=petclinic \
-              -Dsonar.host.url=http://<Sonar-Private-IP>:9000 \
+              -Dsonar.host.url=http://10.0.0.153:9000 \
               -Dsonar.login=$SONAR_TOKEN
             '''
         }
